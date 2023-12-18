@@ -1,5 +1,6 @@
 // Sprite class to render images 
 class Sprite {
+    // The constructor
     constructor({
         position = {
             x: 0,
@@ -23,13 +24,17 @@ class Sprite {
         }
     }
 
+    // Draw function
     draw() {
+        // Draw an image
         if (this.loaded) {
             context.drawImage(this.image, this.position.x, this.position.y);
         }
     }
 
+    // Update function
     update() {
+        // Draw an image
         this.draw();
     }
 };

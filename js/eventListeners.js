@@ -1,3 +1,4 @@
+// Key down event listener
 addEventListener('keydown', ({ key }) => {
     switch (key) {
         // Jump up
@@ -34,6 +35,7 @@ addEventListener('keydown', ({ key }) => {
     }
 });
 
+// Key up event listener
 addEventListener('keyup', ({ key }) => {
     switch (key) {
         // Jump up
