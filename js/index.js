@@ -10,16 +10,25 @@ canvas.height = 576;
 const gravity = 0.8;
 const playerSpeed = 5;
 
+// Parsed level1 collusions block blueprint
+const parsedCollusions = collusionsLevel1.parse2D();
+// console.log(parsedCollusions);
+
+// Construct collusion block array
+let collusionBlocks = parsedCollusions.createObjectsFrom2D();
+
 // Define player object
 let player = new Player({
     position: {
-        x: 100,
-        y: 100
+        x: 200,
+        y: 200
     },
-    width: 100,
-    height: 100
+    width: 25,
+    height: 25,
+    collusionBlocks: collusionBlocks
 });
 
+// Level1 background object
 let backgroundLevel1 = new Sprite({
     position: {
         x: 0,
@@ -48,12 +57,20 @@ let animationId;
 
 // Animation function
 function animate() {
+    // Animate frame
     animationId = requestAnimationFrame(animate);
 
+    // Draw background
     backgroundLevel1.update();
     // context.fillStyle = 'white';
     // context.fillRect(0, 0, canvas.width, canvas.height);
 
+    // Draw collusion blocks
+    collusionBlocks.forEach((collusionBlock) => {
+        collusionBlock.update();
+    });
+
+    // Player movement along x-axis
     player.velocity.x = 0;
     if (keys.d.pressed) {
         player.velocity.x = playerSpeed;
@@ -65,6 +82,7 @@ function animate() {
         player.velocity.x = 0;
     }
 
+    // Update player
     player.update();
 }
 

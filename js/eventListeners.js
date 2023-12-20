@@ -42,7 +42,7 @@ addEventListener('keyup', ({ key }) => {
         case 'w':
             if (player.velocity.y === 0) {
                 keys.w.pressed = false;
-                player.velocity.y = -20;
+                player.velocity.y = -25;
             }
 
             break;
