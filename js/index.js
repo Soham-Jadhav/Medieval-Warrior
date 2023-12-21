@@ -25,7 +25,35 @@ let player = new Player({
     },
     width: 25,
     height: 25,
-    collusionBlocks: collusionBlocks
+    collusionBlocks: collusionBlocks,
+    imageSrc: './../../assets/img/king/idle.png',
+    maxFrames: 11,
+    animations: {
+        idleRight: {
+            imageSrc: './../../assets/img/king/idle.png',
+            maxFrames: 11,
+            holdFrames: 2,
+            loop: true,
+        },
+        idleLeft: {
+            imageSrc: './../../assets/img/king/idleLeft.png',
+            maxFrames: 11,
+            holdFrames: 2,
+            loop: true,
+        },
+        runRight: {
+            imageSrc: './../../assets/img/king/runRight.png',
+            maxFrames: 8,
+            holdFrames: 3,
+            loop: true,
+        },
+        runLeft: {
+            imageSrc: './../../assets/img/king/runLeft.png',
+            maxFrames: 8,
+            holdFrames: 3,
+            loop: true,
+        },
+    }
 });
 
 // Level1 background object
@@ -73,13 +101,25 @@ function animate() {
     // Player movement along x-axis
     player.velocity.x = 0;
     if (keys.d.pressed) {
+        player.switchSprite('runRight');
         player.velocity.x = playerSpeed;
+        player.lastDirection = 'right';
     }
     else if (keys.a.pressed) {
+        player.switchSprite('runLeft');
         player.velocity.x = -playerSpeed;
+        player.lastDirection = 'left';
     }
     else {
         player.velocity.x = 0;
+
+        // Idle sprite 
+        if (player.lastDirection === 'left') {
+            player.switchSprite('idleLeft');
+        }
+        else {
+            player.switchSprite('idleRight');
+        }
     }
 
     // Update player
