@@ -9,7 +9,9 @@ class Sprite {
         imageSrc = './../../assets/img/backgroundLevel1.png',
         maxFrames = 1,
         holdFrames = 2,
-        animations
+        loop = true,
+        autoplay = true,
+        animations,
     }) {
         this.position = position;
         this.loaded = false;
@@ -27,7 +29,11 @@ class Sprite {
             elapsed: 0
         },
             this.animations = animations;
+        this.loop = loop;
+        this.autoplay = autoplay;
+        this.currentAnimation;
 
+        // Add images for different animations
         if (this.animations) {
             for (let key in this.animations) {
                 const image = new Image();
@@ -50,7 +56,7 @@ class Sprite {
             height: this.height,
         };
 
-        // Draw an image
+        // Draw & update an image
         if (this.loaded) {
             context.drawImage(
                 this.image,
@@ -76,18 +82,33 @@ class Sprite {
 
     // Update the frames of the Sprite
     updateFrames() {
-        // Update frames
-        if (this.frames.elapsed % this.frames.hold === 0) {
-            if (this.frames.current + 1 < this.frames.max) {
-                this.frames.current++;
-            }
-            else {
-                this.frames.current = 0;
+        // Check if we need to animate sprite
+        if (this.autoplay) {
+            // Update frames
+            if (this.frames.elapsed % this.frames.hold === 0) {
+                if (this.frames.current + 1 < this.frames.max) {
+                    this.frames.current++;
+                }
+                else if (this.loop) {
+                    this.frames.current = 0;
+                }
+
+                this.frames.elapsed = 1;
             }
 
-            this.frames.elapsed = 1;
+            this.frames.elapsed++;
+
+            if (this.currentAnimation?.onComplete) {
+                if (this.frames.current === this.frames.max - 1 && !this.currentAnimation.isActive) {
+                    this.currentAnimation.onComplete();
+                    this.currentAnimation.isActive = true;
+                }
+            }
         }
+    }
 
-        this.frames.elapsed++;
+    // Play animation
+    play() {
+        this.autoplay = true;
     }
 };

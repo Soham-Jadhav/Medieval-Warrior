@@ -11,13 +11,15 @@ class Player extends Sprite {
         collusionBlocks = [],
         imageSrc = './../../assets/img/king/idle.png',
         maxFrames = 11,
-        animations
+        animations,
+        loop = true
     }) {
         super({
             position: position,
             imageSrc: imageSrc,
             maxFrames: maxFrames,
-            animations: animations
+            animations: animations,
+            loop: loop
         });
         // this.position = position;
         this.velocity = {
@@ -183,6 +185,8 @@ class Player extends Sprite {
             this.frames.max = this.animations[name].maxFrames;
             this.frames.hold = this.animations[name].holdFrames;
             this.frames.current = 0;
+            this.loop = this.animations[name].loop;
+            this.currentAnimation = this.animations[name];
         }
     }
 };

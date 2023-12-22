@@ -10,6 +10,16 @@ canvas.height = 576;
 const gravity = 0.8;
 const playerSpeed = 5;
 
+// // Levels data
+// let level = 1;
+// let levels = {
+//     1: {
+//         init: () => {
+
+//         }
+//     }
+// };
+
 // Parsed level1 collusions block blueprint
 const parsedCollusions = collusionsLevel1.parse2D();
 // console.log(parsedCollusions);
@@ -53,8 +63,38 @@ let player = new Player({
             holdFrames: 3,
             loop: true,
         },
+        enterDoor: {
+            imageSrc: './../../assets/img/king/enterDoor.png',
+            maxFrames: 8,
+            holdFrames: 4,
+            loop: false,
+            onComplete: () => {
+                console.log("Level Completed!!!");
+                gsap.to(
+                    overlay, {
+                    opacity: 1
+                }
+                );
+            },
+        },
     }
 });
+
+// Game doors array
+let doors = [
+    new Sprite({
+        position: {
+            x: 767,
+            y: 270
+        },
+        imageSrc: './../../assets/img/doorOpen.png',
+        maxFrames: 5,
+        holdFrames: 5,
+        loop: false,
+        autoplay: false
+    })
+];
+
 
 // Level1 background object
 let backgroundLevel1 = new Sprite({
@@ -81,6 +121,9 @@ let keys = {
         pressed: false
     }
 };
+let overlay = {
+    opacity: 0
+};
 let animationId;
 
 // Animation function
@@ -98,32 +141,46 @@ function animate() {
         collusionBlock.update();
     });
 
-    // Player movement along x-axis
-    player.velocity.x = 0;
-    if (keys.d.pressed) {
-        player.switchSprite('runRight');
-        player.velocity.x = playerSpeed;
-        player.lastDirection = 'right';
-    }
-    else if (keys.a.pressed) {
-        player.switchSprite('runLeft');
-        player.velocity.x = -playerSpeed;
-        player.lastDirection = 'left';
-    }
-    else {
-        player.velocity.x = 0;
+    // Draw door/s
+    doors.forEach((door) => {
+        door.update();
+    });
 
-        // Idle sprite 
-        if (player.lastDirection === 'left') {
-            player.switchSprite('idleLeft');
+    if (!player.preventInput) {
+        // Player movement along x-axis
+        player.velocity.x = 0;
+        if (keys.d.pressed) {
+            player.switchSprite('runRight');
+            player.velocity.x = playerSpeed;
+            player.lastDirection = 'right';
+        }
+        else if (keys.a.pressed) {
+            player.switchSprite('runLeft');
+            player.velocity.x = -playerSpeed;
+            player.lastDirection = 'left';
         }
         else {
-            player.switchSprite('idleRight');
+            player.velocity.x = 0;
+
+            // Idle sprite 
+            if (player.lastDirection === 'left') {
+                player.switchSprite('idleLeft');
+            }
+            else {
+                player.switchSprite('idleRight');
+            }
         }
     }
 
     // Update player
     player.update();
+
+    // Black background
+    context.save();
+    context.globalAlpha = overlay.opacity;
+    context.fillStyle = 'black';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.restore();
 }
 
 animate();
