@@ -5,6 +5,10 @@ You can play the game here: \< To be Updated...\>
 
 ---
 
+![image](https://github.com/Soham-Jadhav/Medieval-Warrior/assets/98579549/58dbbb94-55d6-4fd6-8202-08b61166bf5d)
+
+---
+
 ## Player Controls
 
 WASD --> To move.
