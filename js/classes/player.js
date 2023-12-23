@@ -21,25 +21,13 @@ class Player extends Sprite {
             animations: animations,
             loop: loop
         });
-        // this.position = position;
         this.velocity = {
             x: 0,
             y: 3
         };
-        // this.width = width;
-        // this.height = height;
         this.color = 'rgba(0, 0, 255, 0.5)';
         this.collusionBlocks = collusionBlocks;
     }
-
-    // // The draw function
-    // draw() {
-    //     // super.draw();
-
-    //     // Draw player
-    //     context.fillStyle = this.color;
-    //     context.fillRect(this.position.x, this.position.y, this.width, this.height);
-    // }
 
     // Update function to update the player properties
     update() {
@@ -55,16 +43,6 @@ class Player extends Sprite {
         // Check for collision with blocks and set velocity if not in a block
         this.checkHorizontalCollusions();
 
-        // if (
-        //     this.position.x > 0 &&
-        //     this.position.x + this.width < canvas.width
-        // ) {
-        //     // If it's not at the left edge or right edge of the canvas
-        // }
-        // else {
-        //     this.velocity.x = 0;
-        // }
-
         // Apply Gravity
         this.applyGravity();
 
@@ -73,13 +51,6 @@ class Player extends Sprite {
 
         // Check for collision with blocks and set velocity if not in a block
         this.checkVerticalCollusions();
-
-        // if (this.position.y + this.height + this.velocity.y < canvas.height) {
-        //     this.velocity.y += gravity;
-        // }
-        // else {
-        //     this.velocity.y = 0;
-        // }
     }
 
     // Apply gravity
@@ -100,7 +71,6 @@ class Player extends Sprite {
             width: 53,
             height: 57,
         };
-        // context.fillRect(this.hitbox.position.x, this.hitbox.position.y, this.hitbox.width, this.hitbox.height);
     }
 
     // Check for collision with blocks
@@ -108,9 +78,6 @@ class Player extends Sprite {
         // Check for collision with blocks and set velocity if not in a block
         for (let i = 0; i < this.collusionBlocks.length; i++) {
             const collusionBlock = this.collusionBlocks[i];
-
-            // console.log(this);
-            // console.log(collusionBlock);
 
             // If collusion detected
             if (
@@ -132,7 +99,6 @@ class Player extends Sprite {
                 if (this.velocity.x > 0) {
                     const offset = this.hitbox.position.x - this.position.x + this.hitbox.width;
                     this.position.x = collusionBlock.position.x - offset - delta;
-                    // this.position.x = collusionBlock.position.x - this.width - delta;
                     break;
                 }
             }
@@ -143,9 +109,6 @@ class Player extends Sprite {
     checkVerticalCollusions() {
         for (let i = 0; i < this.collusionBlocks.length; i++) {
             const collusionBlock = this.collusionBlocks[i];
-
-            // console.log(this);
-            // console.log(collusionBlock);
 
             // If collusion detected
             if (
@@ -171,7 +134,6 @@ class Player extends Sprite {
 
                     const offset = this.hitbox.position.y - this.position.y + this.hitbox.height;
                     this.position.y = collusionBlock.position.y - offset - delta;
-                    // this.position.y = collusionBlock.position.y - this.height - delta;
                     break;
                 }
             }

@@ -16,7 +16,6 @@ addEventListener('keydown', ({ key }) => {
                     player.hitbox.position.y <= door.position.y + door.height &&
                     player.hitbox.position.y + player.hitbox.height >= door.position.y
                 ) {
-                    // console.log('player-door colllusion');
                     player.preventInput = true;
                     player.velocity.x = 0;
                     player.velocity.y = 0;
@@ -38,7 +37,6 @@ addEventListener('keydown', ({ key }) => {
         // Move left
         case 'a':
             keys.a.pressed = true;
-            // player.velocity.x = -4;
 
             break;
 
@@ -50,7 +48,6 @@ addEventListener('keydown', ({ key }) => {
         // Move right
         case 'd':
             keys.d.pressed = true;
-            // player.velocity.x = 4;
 
             break;
 
@@ -74,7 +71,6 @@ addEventListener('keyup', ({ key }) => {
         // Move left
         case 'a':
             keys.a.pressed = false;
-            // player.velocity.x = 0;
 
             break;
 
@@ -86,7 +82,6 @@ addEventListener('keyup', ({ key }) => {
         // Move right
         case 'd':
             keys.d.pressed = false;
-            // player.velocity.x = 0;
 
             break;
 
